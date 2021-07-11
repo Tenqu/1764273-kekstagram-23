@@ -1,4 +1,4 @@
-import {PHOTO_DESCRIPTION_OPTIONS, MESSAGES, NAMES} from './consts.js';
+import {MESSAGES, NAMES, PHOTO_DESCRIPTION_OPTIONS} from './consts.js';
 import {getRandomPositiveInteger, getRandomArrayElements} from './util.js';
 const createCommentObjects = () => ({
   id: getRandomPositiveInteger(1, 100),
@@ -6,12 +6,26 @@ const createCommentObjects = () => ({
   message: getRandomArrayElements(MESSAGES),
   name: getRandomArrayElements(NAMES),
 });
-const createObject = () => ({
-  id: getRandomPositiveInteger(1, 25),
-  url: `photos/${  getRandomPositiveInteger(1, 25)  }.jpg`,
-  description: 'Сказочное Бали',
-  likes: getRandomPositiveInteger(15, 200),
-  comments: new Array(getRandomPositiveInteger(1, 4)).fill(null).map(() => createCommentObjects()),
-});
-const photoDescriptions = new Array(PHOTO_DESCRIPTION_OPTIONS).fill(null).map(() => createObject());
-export {createCommentObjects, createObject, photoDescriptions};
+const createPhotoDescriptions = (numberOfDescriptions) => {
+  const photoDescriptions = [];
+  const createSingleElement = () => {
+    let randomId = getRandomPositiveInteger(1, 25);
+    while (photoDescriptions.find((item) => item.id === randomId)) {
+      randomId = getRandomPositiveInteger(1,25);
+    }
+    return {
+      id: randomId,
+      url: `photos/${  randomId  }.jpg`,
+      description: 'Сказочное Бали',
+      likes: getRandomPositiveInteger(15, 200),
+      comments: new Array(getRandomPositiveInteger(1, 4)).fill(null).map(() => createCommentObjects()),
+    };
+  };
+  while (photoDescriptions.length < numberOfDescriptions) {
+    photoDescriptions.push(createSingleElement());
+  }
+  return photoDescriptions;
+};
+const imgArray = createPhotoDescriptions(PHOTO_DESCRIPTION_OPTIONS);
+
+export {imgArray};
