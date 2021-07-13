@@ -11,4 +11,5 @@ function getRandomPositiveInteger (a, b) {
 function getRandomArrayElements(elements) {
   return elements[Math.floor(Math.random()*elements.length)];
 }
-export {checkStringLength, getRandomPositiveInteger, getRandomArrayElements};
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+export {checkStringLength, getRandomPositiveInteger, getRandomArrayElements, isEscEvent};

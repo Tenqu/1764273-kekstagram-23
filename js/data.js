@@ -27,5 +27,4 @@ const createPhotoDescriptions = (numberOfDescriptions) => {
   return photoDescriptions;
 };
 const imgArray = createPhotoDescriptions(PHOTO_DESCRIPTION_OPTIONS);
-
 export {imgArray};
