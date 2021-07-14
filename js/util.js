@@ -12,4 +12,8 @@ function getRandomArrayElements(elements) {
   return elements[Math.floor(Math.random()*elements.length)];
 }
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
-export {checkStringLength, getRandomPositiveInteger, getRandomArrayElements, isEscEvent};
+const dublicates = (array) => {
+  array = array.map((evt) => evt.toLowerCase());
+  return (new Set(array)).size !== array.length;
+};
+export {checkStringLength, getRandomPositiveInteger, getRandomArrayElements, isEscEvent, dublicates};

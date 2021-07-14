@@ -55,7 +55,11 @@ const showBigPicture = (array) => {
   };
   bigPictureModalOpenElement.addEventListener('click', (evt) => {
     const dataClickImage = evt.target.getAttribute('data-image');
-
+    const target = evt.target;
+    const ignoreTarget = document.querySelector('.img-upload');
+    if (target === ignoreTarget || ignoreTarget.contains(target)) {
+      return;
+    }
     openBigPictureModal();
     const elementOfMassive = array[dataClickImage];
     bigPicture(elementOfMassive);

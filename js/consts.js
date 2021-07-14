@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 const MAX_COMMENT_LENGTH = 140;
 const PHOTO_DESCRIPTION_OPTIONS = 25;
 const MESSAGES = [
@@ -16,4 +15,4 @@ const NAMES = [
   'Михаил',
   'Андрей',
 ];
-export {PHOTO_DESCRIPTION_OPTIONS, MESSAGES, NAMES};
+export {PHOTO_DESCRIPTION_OPTIONS, MESSAGES, NAMES, MAX_COMMENT_LENGTH};
