@@ -1,4 +1,5 @@
 import { MAX_COMMENT_LENGTH } from './consts.js';
+import { activateEffect, deactivateEffect } from './slider.js';
 import { dublicates, isEscEvent } from './util.js';
 const uploadFileButton = document.querySelector('#upload-file');
 const uploadCancelButton = document.querySelector('.img-upload__cancel');
@@ -9,6 +10,15 @@ const imgPreview = document.querySelector('.img-upload__preview > img');
 const MAX_HASHTAGS_COUNT = 5;
 const re = /^#[A-Za-zА-ЯаЯ0-9]{1,19}$/;
 
+const onImageEscKeydown = (evt) => {
+  if (textHashtagsField === document.activeElement || textDescriptionField === document.activeElement) {
+    return;
+  }
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
+    closeImageModal();
+  }
+};
 function closeTextDescription () {
   const valueLength = textDescriptionField.value.length;
   if (valueLength > MAX_COMMENT_LENGTH) {
@@ -36,25 +46,19 @@ function closeHashtags () {
     textHashtagsField.reportValidity();
   });
 }
-const onImageEscKeydown = (evt) => {
-  if (textHashtagsField === document.activeElement || textDescriptionField === document.activeElement) {
-    return;
-  }
-  if (isEscEvent(evt)) {
-    evt.preventDefault();
-    closeImageModal();
-  }
-};
+
 function openImageModal () {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onImageEscKeydown);
+  activateEffect();
 }
 function closeImageModal () {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   uploadFileButton.value = '';
   textDescriptionField.value ='';
+  deactivateEffect();
   uploadCancelButton.removeEventListener('click', closeImageModal);
   textDescriptionField.removeEventListener('input', closeTextDescription);
   textHashtagsField.removeEventListener('input', closeHashtags);
