@@ -1,4 +1,5 @@
 const MAX_COMMENT_LENGTH = 140;
+const MAX_HASHTAG_AMOUNT = 5;
 const PHOTO_DESCRIPTION_OPTIONS = 25;
 const MESSAGES = [
   'Всё отлично!',
@@ -82,4 +83,4 @@ const effects = {
     },
   },
 };
-export {PHOTO_DESCRIPTION_OPTIONS, MESSAGES, NAMES, MAX_COMMENT_LENGTH, effects};
+export {PHOTO_DESCRIPTION_OPTIONS, MESSAGES, NAMES, MAX_COMMENT_LENGTH, MAX_HASHTAG_AMOUNT, effects};
