@@ -18,7 +18,7 @@ const createPhotoDescriptions = (numberOfDescriptions) => {
       url: `photos/${  randomId  }.jpg`,
       description: 'Сказочное Бали',
       likes: getRandomPositiveInteger(15, 200),
-      comments: new Array(getRandomPositiveInteger(1, 4)).fill(null).map(() => createCommentObjects()),
+      comments: new Array(getRandomPositiveInteger(1, 7)).fill(null).map(() => createCommentObjects()),
     };
   };
   while (photoDescriptions.length < numberOfDescriptions) {
