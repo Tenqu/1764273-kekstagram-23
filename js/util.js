@@ -35,7 +35,7 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 let postsList;
-let currentComments;
+let currentComments = [];
 const getCurrentComments = () => currentComments;
 const setCurrentComments = (comment) => {
   currentComments.push(comment);
