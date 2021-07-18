@@ -1,3 +1,3 @@
-import {getContent, startsForm} from './upload-file.js';
+import {getContent, openForm} from './upload-file.js';
 getContent();
-startsForm();
+openForm();

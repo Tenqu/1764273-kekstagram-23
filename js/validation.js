@@ -1,36 +1,50 @@
 import { MAX_COMMENT_LENGTH, MAX_HASHTAG_AMOUNT } from './consts.js';
-import {checkStringLength, hasDublicates} from './util.js';
+import {checkStringLength} from './util.js';
 const textHashtagsField = document.querySelector('.text__hashtags');
 const textDescriptionField = document.querySelector('.text__description');
-const re = /^#[A-Za-zА-ЯаЯ0-9]{1,19}$/;
+
+const isUniqueHastags = (hashtags) => {
+  let tempStr = '';
+  for (let i = 0; i < hashtags.length; i++) {
+    const curHashtagLowerCaseAndseparator = `${hashtags[i].toLowerCase()}_`;
+    if(tempStr.indexOf(curHashtagLowerCaseAndseparator) !== -1) {
+      return false;
+    }
+    tempStr += curHashtagLowerCaseAndseparator;
+  }
+  return true;
+};
 
 const validateHashtags = () => {
-  textHashtagsField.addEventListener('input', () => {
-    let invalid = false;
-    const hashtagsList = textHashtagsField.value.toLowerCase().split(' ');
-    if (hashtagsList.length > MAX_HASHTAG_AMOUNT) {
-      invalid = true;
-      textHashtagsField.setCustomValidity(`Удалите лишние ${hashtagsList.length - MAX_HASHTAG_AMOUNT} хэштэга`);
-      textHashtagsField.classList.add('error-input');
-    }
-    hashtagsList.forEach((hashtag) => {
-      if (!re.test(hashtag)) {
-        invalid = true;
-        textHashtagsField.setCustomValidity('Хэштэг должен начинаться с #, состоять из букв и чисел, не может содержать спецсимволы.');
-        textHashtagsField.classList.add('error-input');
-      }
-    });
-    if (hasDublicates(hashtagsList)) {
-      invalid = true;
-      textHashtagsField.setCustomValidity('Хэштэг не должен повторяться.');
-      textHashtagsField.classList.add('error-input');
-    }
-    if (!invalid) {
-      textHashtagsField.setCustomValidity('');
-      textHashtagsField.classList.remove('error-input');
-    }
+  const hashtagsInputValue = textHashtagsField.value;
+  textHashtagsField.setCustomValidity('');
+  if(hashtagsInputValue === '') {
+    return false;
+  }
+
+  const re = /^#[A-Za-zА-Яа-я0-9]{1,19}$/;
+  const hashtags = hashtagsInputValue.split(' ');
+  if(hashtags.length > 5) {
+    textHashtagsField.setCustomValidity('Нельзя указать больше пяти хэштегов');
     textHashtagsField.reportValidity();
-  });
+    return false;
+  }
+  for (let i = 0; i < hashtags.length; i++) {
+    if(hashtags[i].length > 20) {
+      textHashtagsField.setCustomValidity('Хэштэг не может превышать 20 символов (включая #)');
+      textHashtagsField.reportValidity();
+      return false;
+    }
+    if(!re.test(hashtags[i])) {
+      textHashtagsField.setCustomValidity('Хэштэг должен начинаться со знака #, не может содержать пробелы и спецсимволы');
+      textHashtagsField.reportValidity();
+      return false;
+    }
+  }
+  if(!isUniqueHastags(hashtags)) {
+    textHashtagsField.setCustomValidity('Хэштеги не должны повторяться');
+  }
+  textHashtagsField.reportValidity();
 };
 
 const validateComments = () => {

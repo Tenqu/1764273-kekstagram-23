@@ -13,7 +13,7 @@ const preview = document.querySelector('.img-upload__preview img');
 const imgUploadForm = document.querySelector('.img-upload__form');
 const cancelButton = imgUploadForm.querySelector('#upload-cancel');
 const imgOverlay = imgUploadForm.querySelector('.img-upload__overlay');
-const hashtagInput =  imgUploadForm.querySelector('.text__hashtags');
+const hashtags =  imgUploadForm.querySelector('.text__hashtags');
 const commentText = imgUploadForm.querySelector('.text__description');
 const effectNone = imgUploadForm.querySelector('#effect-none');
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
@@ -39,11 +39,11 @@ const startUploader = () => {
 const resetInputs = () => {
   preview.src = DEFAULT_IMG_URL;
   fileUploader.value = '';
-  hashtagInput.value ='';
+  hashtags.value ='';
   commentText.value = '';
   effectNone.checked = true;
 };
-function closeUploadEsc(evt) {
+function closePhotoEsc(evt) {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     imgOverlay.classList.add('hidden');
@@ -51,38 +51,38 @@ function closeUploadEsc(evt) {
     resetInputs();
     deactivateScale();
     deactivateEffect();
-    document.removeEventListener('keydown', closeUploadEsc);
-    cancelButton.removeEventListener('click', closeUpload);
+    document.removeEventListener('keydown', closePhotoEsc);
+    cancelButton.removeEventListener('click', closePhotoModal);
   }
 }
-function closeUpload() {
+function closePhotoModal() {
   imgOverlay.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   resetInputs();
   deactivateScale();
   deactivateEffect();
-  document.removeEventListener('keydown', closeUploadEsc);
-  cancelButton.removeEventListener('click', closeUpload);
+  document.removeEventListener('keydown', closePhotoEsc);
+  cancelButton.removeEventListener('click', closePhotoModal);
 }
 
-const openUpload = () => {
+const openPhotoModal = () => {
   imgOverlay.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
-  document.addEventListener('keydown', closeUploadEsc);
-  cancelButton.addEventListener('click', closeUpload);
+  document.addEventListener('keydown', closePhotoEsc);
+  cancelButton.addEventListener('click', closePhotoModal);
   activateScale();
   activateEffect();
   validateHashtags();
   validateComments();
   startUploader();
 };
-const startsForm = () => {
+const openForm = () => {
   fileUploader.addEventListener('click', () => {
-    openUpload();
+    openPhotoModal();
   });
 };
-
-hashtagInput.addEventListener('keydown', (evt) => {
+hashtags.addEventListener('input', validateHashtags);
+hashtags.addEventListener('keydown', (evt) => {
   evt.stopPropagation();
 });
 
@@ -91,7 +91,7 @@ commentText.addEventListener('keydown', (evt) => {
 });
 
 const onSuccess = () => {
-  closeUpload();
+  closePhotoModal();
   showSuccessMessage();
 };
 
@@ -124,4 +124,4 @@ imgUpload.addEventListener('click', (evt) => {
   evt.stopPropagation();
 });
 
-export {startsForm, getContent};
+export {openForm, getContent};
