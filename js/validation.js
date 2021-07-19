@@ -1,4 +1,4 @@
-import { MAX_COMMENT_LENGTH, MAX_HASHTAG_AMOUNT } from './consts.js';
+import { MAX_COMMENT_LENGTH } from './consts.js';
 import {checkStringLength} from './util.js';
 const textHashtagsField = document.querySelector('.text__hashtags');
 const textDescriptionField = document.querySelector('.text__description');
