@@ -27,5 +27,12 @@ const onButtonBigger = () => {
     setImageScale(currentValue);
   }
 };
-buttonSmaller.addEventListener('click', onButtonSmaller);
-buttonBigger.addEventListener('click', onButtonBigger);
+const activateScale = () => {
+  buttonSmaller.addEventListener('click', onButtonSmaller);
+  buttonBigger.addEventListener('click', onButtonBigger);
+};
+const deactivateScale = () => {
+  buttonSmaller.removeEventListener('click', onButtonSmaller);
+  buttonBigger.removeEventListener('click', onButtonBigger);
+};
+export {activateScale, deactivateScale};
