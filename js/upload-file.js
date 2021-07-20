@@ -34,6 +34,9 @@ const startUploader = () => {
       });
 
       reader.readAsDataURL(file);
+    } else {
+      showErrorMessage();
+      closePhotoModal();
     }
   });
 };
