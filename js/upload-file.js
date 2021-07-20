@@ -24,9 +24,7 @@ const startUploader = () => {
   fileUploader.addEventListener('change', () => {
     const file = fileUploader.files[0];
     const fileName = file.name.toLowerCase();
-
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-
     if (matches) {
       const reader = new FileReader();
       reader.addEventListener('load', () => {
@@ -34,6 +32,9 @@ const startUploader = () => {
       });
 
       reader.readAsDataURL(file);
+    } else {
+      closePhotoModal();
+      showErrorMessage();
     }
   });
 };
