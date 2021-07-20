@@ -6,6 +6,7 @@ import { activateScale, deactivateScale } from './scale-control.js';
 import { activateEffect, deactivateEffect } from './slider-effect.js';
 import { validateHashtags, validateComments } from './validation.js';
 import { showSuccessMessage, showErrorMessage } from './message-upload.js';
+import { activateFilter } from './filter.js';
 const imgUpload = document.querySelector('.img-upload');
 const picturesList = document.querySelector('.pictures');
 const fileUploader = document.querySelector('#upload-file');
@@ -117,6 +118,7 @@ const getContent = () => {
       };
       showBigPicture(posts.find(findPicture));
     });
+    activateFilter();
   });
 };
 

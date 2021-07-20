@@ -47,4 +47,17 @@ const setPosts = (posts) => {
   postsList = posts.slice();
 };
 const getPosts = () => postsList;
-export {checkStringLength, clearComments, getCurrentComments, setCurrentComments, getRandomPositiveInteger, getRandomArrayElements, isEscEvent, hasDublicates, showAlert, setPosts, getPosts};
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+const shuffle = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = getRandomPositiveInteger(0, i);
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+};
+export {checkStringLength, clearComments, getCurrentComments, setCurrentComments, getRandomPositiveInteger, getRandomArrayElements, isEscEvent, hasDublicates, showAlert, setPosts, getPosts, debounce, shuffle };

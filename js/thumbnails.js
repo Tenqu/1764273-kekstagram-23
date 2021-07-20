@@ -13,4 +13,4 @@ const createPictureDescriptions = (similarElements) => {
   });
   similarListPictures.appendChild(similarPicturesFragment);
 };
-export {createPictureDescriptions};
+export {similarListPictures, createPictureDescriptions};
