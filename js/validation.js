@@ -3,7 +3,7 @@ import {checkStringLength} from './util.js';
 const textHashtagsField = document.querySelector('.text__hashtags');
 const textDescriptionField = document.querySelector('.text__description');
 
-const isUniqueHastags = (hashtags) => {
+const getUniqueHastags = (hashtags) => {
   let tempStr = '';
   for (let i = 0; i < hashtags.length; i++) {
     const curHashtagLowerCaseAndseparator = `${hashtags[i].toLowerCase()}_`;
@@ -41,7 +41,7 @@ const validateHashtags = () => {
       return false;
     }
   }
-  if(!isUniqueHastags(hashtags)) {
+  if(!getUniqueHastags(hashtags)) {
     textHashtagsField.setCustomValidity('Хэштеги не должны повторяться');
   }
   textHashtagsField.reportValidity();

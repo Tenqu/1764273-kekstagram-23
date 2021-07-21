@@ -1,3 +1,4 @@
+const ALERT_SHOW_TIME = 5000;
 function checkStringLength (string, length) {
   return string.length <= length;
 }
@@ -7,15 +8,7 @@ function getRandomPositiveInteger (a, b) {
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 }
-function getRandomArrayElements(elements) {
-  return elements[Math.floor(Math.random()*elements.length)];
-}
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
-const hasDublicates = (array) => {
-  array = array.map((evt) => evt.toLowerCase());
-  return (new Set(array)).size !== array.length;
-};
-const ALERT_SHOW_TIME = 5000;
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
@@ -60,4 +53,5 @@ const shuffle = (array) => {
     [array[i], array[j]] = [array[j], array[i]];
   }
 };
-export {checkStringLength, clearComments, getCurrentComments, setCurrentComments, getRandomPositiveInteger, getRandomArrayElements, isEscEvent, hasDublicates, showAlert, setPosts, getPosts, debounce, shuffle };
+
+export {checkStringLength, clearComments, getCurrentComments, setCurrentComments, getRandomPositiveInteger, isEscEvent,  showAlert, setPosts, getPosts, debounce, shuffle };

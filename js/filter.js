@@ -1,5 +1,6 @@
 import { createPictureDescriptions } from './thumbnails.js';
 import { debounce, getPosts, shuffle } from './util.js';
+const RANDOM_COUNT = 10;
 const filterForm = document.querySelector('.img-filters__form');
 const filterList = document.querySelector('.img-filters');
 const filterButton = filterForm.querySelectorAll('.img-filters__button');
@@ -15,7 +16,7 @@ const compareComments = (A, B) => {
 };
 const activateFilter = () => {
   filterList.classList.remove('img-filters--inactive');
-  const isDefault = () => {
+  const showDefault = () => {
     clearPictures();
     createPictureDescriptions(getPosts());
   };
@@ -23,7 +24,7 @@ const activateFilter = () => {
     clearPictures();
     const posts = getPosts().slice();
     shuffle(posts);
-    const randomPost = posts.slice(0, 10);
+    const randomPost = posts.slice(0, RANDOM_COUNT);
     createPictureDescriptions(randomPost);
   };
   const showMoreDiscussed = () => {
@@ -36,7 +37,7 @@ const activateFilter = () => {
     const filterBtn = evt.target;
     switch (filterBtn.id) {
       case 'filter-default':
-        isDefault();
+        showDefault();
         break;
 
       case 'filter-random':

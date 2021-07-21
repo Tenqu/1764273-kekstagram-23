@@ -7,6 +7,8 @@ import { activateEffect, deactivateEffect } from './slider-effect.js';
 import { validateHashtags, validateComments } from './validation.js';
 import { showSuccessMessage, showErrorMessage } from './message-upload.js';
 import { activateFilter } from './filter.js';
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const DEFAULT_IMG_URL = 'img/upload-default-image.jpg';
 const imgUpload = document.querySelector('.img-upload');
 const picturesList = document.querySelector('.pictures');
 const fileUploader = document.querySelector('#upload-file');
@@ -17,22 +19,18 @@ const imgOverlay = imgUploadForm.querySelector('.img-upload__overlay');
 const hashtags =  imgUploadForm.querySelector('.text__hashtags');
 const commentText = imgUploadForm.querySelector('.text__description');
 const effectNone = imgUploadForm.querySelector('#effect-none');
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-const DEFAULT_IMG_URL = 'img/upload-default-image.jpg';
 
 const startUploader = () => {
   fileUploader.addEventListener('change', () => {
+    imgOverlay.classList.remove('hidden');
     const file = fileUploader.files[0];
     const fileName = file.name.toLowerCase();
-
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-
     if (matches) {
       const reader = new FileReader();
       reader.addEventListener('load', () => {
         preview.src = reader.result;
       });
-
       reader.readAsDataURL(file);
     } else {
       showErrorMessage();
@@ -70,7 +68,6 @@ function closePhotoModal() {
 }
 
 const openPhotoModal = () => {
-  imgOverlay.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
   document.addEventListener('keydown', closePhotoEsc);
   cancelButton.addEventListener('click', closePhotoModal);
