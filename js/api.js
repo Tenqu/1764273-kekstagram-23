@@ -1,6 +1,6 @@
 import { showAlert } from './util.js';
 
-const URL_GET_DATA = 'https://23.javascript.pages.academy/kekstagram/data';
+const URL_GET_DATA = 'https://23.javascript.pages.academy/kekstagram/dat';
 const URL_SEND_DATA = 'https://23.javascript.pages.academy/kekstagram';
 
 const onResponseCallback = (response) => {
@@ -23,6 +23,7 @@ const getData = (onSuccess) => fetch(URL_GET_DATA)
   .catch(() => {
     showAlert('Не удалось получить данные с сервера. Попробуйте ещё раз.');
   });
+
 const sendData = (onSuccess, onFail, body) => {
   customFetch(URL_SEND_DATA, body)
     .then(onSuccess)

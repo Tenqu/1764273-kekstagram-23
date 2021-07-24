@@ -119,7 +119,8 @@ const getContent = () => {
       showBigPicture(posts.find(findPicture));
     });
     activateFilter();
-  });
+  })
+    .catch(() => {});
 };
 
 imgUpload.addEventListener('click', (evt) => {
