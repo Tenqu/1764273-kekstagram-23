@@ -1,6 +1,6 @@
 import { getData, sendData } from './api.js';
 import { createPictureDescriptions } from './thumbnails.js';
-import { setPosts, showAlert, isEscEvent } from './util.js';
+import { setPosts, isEscEvent } from './util.js';
 import { showBigPicture } from './fullscreen.js';
 import { activateScale, deactivateScale } from './scale-control.js';
 import { activateEffect, deactivateEffect } from './slider-effect.js';
@@ -16,11 +16,11 @@ const preview = document.querySelector('.img-upload__preview img');
 const imgUploadForm = document.querySelector('.img-upload__form');
 const cancelButton = imgUploadForm.querySelector('#upload-cancel');
 const imgOverlay = imgUploadForm.querySelector('.img-upload__overlay');
-const hashtags =  imgUploadForm.querySelector('.text__hashtags');
+const hashtagsLoadHandler =  imgUploadForm.querySelector('.text__hashtags');
 const commentText = imgUploadForm.querySelector('.text__description');
 const effectNone = imgUploadForm.querySelector('#effect-none');
 
-const startUploader = () => {
+const startUpload = () => {
   fileUploader.addEventListener('change', () => {
     imgOverlay.classList.remove('hidden');
     const file = fileUploader.files[0];
@@ -34,18 +34,18 @@ const startUploader = () => {
       reader.readAsDataURL(file);
     } else {
       showErrorMessage();
-      closePhotoModal();
+      onClosePhotoModal();
     }
   });
 };
 const resetInputs = () => {
   preview.src = DEFAULT_IMG_URL;
   fileUploader.value = '';
-  hashtags.value ='';
+  hashtagsLoadHandler.value ='';
   commentText.value = '';
   effectNone.checked = true;
 };
-function closePhotoEsc(evt) {
+function onClosePhotoEsc(evt) {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     imgOverlay.classList.add('hidden');
@@ -53,37 +53,37 @@ function closePhotoEsc(evt) {
     resetInputs();
     deactivateScale();
     deactivateEffect();
-    document.removeEventListener('keydown', closePhotoEsc);
-    cancelButton.removeEventListener('click', closePhotoModal);
+    document.removeEventListener('keydown', onClosePhotoEsc);
+    cancelButton.removeEventListener('click', onClosePhotoModal);
   }
 }
-function closePhotoModal() {
+function onClosePhotoModal() {
   imgOverlay.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   resetInputs();
   deactivateScale();
   deactivateEffect();
-  document.removeEventListener('keydown', closePhotoEsc);
-  cancelButton.removeEventListener('click', closePhotoModal);
+  document.removeEventListener('keydown', onClosePhotoEsc);
+  cancelButton.removeEventListener('click', onClosePhotoModal);
 }
 
-const openPhotoModal = () => {
+const onOpenPhotoModal = () => {
   document.querySelector('body').classList.add('modal-open');
-  document.addEventListener('keydown', closePhotoEsc);
-  cancelButton.addEventListener('click', closePhotoModal);
+  document.addEventListener('keydown', onClosePhotoEsc);
+  cancelButton.addEventListener('click', onClosePhotoModal);
   activateScale();
   activateEffect();
   validateHashtags();
   validateComments();
-  startUploader();
+  startUpload();
 };
 const openForm = () => {
   fileUploader.addEventListener('click', () => {
-    openPhotoModal();
+    onOpenPhotoModal();
   });
 };
-hashtags.addEventListener('input', validateHashtags);
-hashtags.addEventListener('keydown', (evt) => {
+hashtagsLoadHandler.addEventListener('input', validateHashtags);
+hashtagsLoadHandler.addEventListener('keydown', (evt) => {
   evt.stopPropagation();
 });
 
@@ -92,7 +92,7 @@ commentText.addEventListener('keydown', (evt) => {
 });
 
 const onSuccess = () => {
-  closePhotoModal();
+  onClosePhotoModal();
   showSuccessMessage();
 };
 
@@ -107,7 +107,7 @@ const setUserFormSubmit = () => {
 setUserFormSubmit(onSuccess);
 
 const getContent = () => {
-  getData(showAlert).then((posts) => {
+  getData(() => {}).then((posts) => {
     createPictureDescriptions(posts);
     setPosts(posts);
     picturesList.addEventListener('click', (evt) => {

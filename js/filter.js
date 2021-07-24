@@ -1,6 +1,7 @@
 import { createPictureDescriptions } from './thumbnails.js';
 import { debounce, getPosts, shuffle } from './util.js';
 const RANDOM_COUNT = 10;
+const MIN_COUNT = 0;
 const filterForm = document.querySelector('.img-filters__form');
 const filterList = document.querySelector('.img-filters');
 const filterButton = filterForm.querySelectorAll('.img-filters__button');
@@ -24,7 +25,7 @@ const activateFilter = () => {
     clearPictures();
     const posts = getPosts().slice();
     shuffle(posts);
-    const randomPost = posts.slice(0, RANDOM_COUNT);
+    const randomPost = posts.slice(MIN_COUNT, RANDOM_COUNT);
     createPictureDescriptions(randomPost);
   };
   const showMoreDiscussed = () => {
